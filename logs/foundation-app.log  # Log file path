@@ -1,0 +1,27 @@
+2024-11-20T22:39:33.198+05:30 ERROR 16176 --- [foundation-app] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'logging.level.com.foundationapp' to org.springframework.boot.logging.LogLevel:
+
+    Property: logging.level.com.foundationapp
+    Value: "DEBUG  # Change to your package name"
+    Origin: class path resource [application.properties] - 21:33
+    Reason: failed to convert java.lang.String to org.springframework.boot.logging.LogLevel (caused by java.lang.IllegalArgumentException: No enum constant org.springframework.boot.logging.LogLevel.DEBUG  # Change to your package name)
+
+Action:
+
+Update your application's configuration. The following values are valid:
+
+    DEBUG
+    ERROR
+    FATAL
+    INFO
+    OFF
+    TRACE
+    WARN
+
