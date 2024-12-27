@@ -1,5 +1,7 @@
 package com.kksg.dtos;
 
+import com.kksg.entity.Category;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +12,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDTO extends BaseResponseDTO {
+public class CategoryRequestDTO{
 	
 	@NotBlank(message = "Name is required")
 	private String name;
 	
 	private String description;
+	
+    private Category parentCategory;
+    
 }

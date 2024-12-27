@@ -30,7 +30,7 @@ public abstract class BaseController<T extends BaseEntity, R, U> {
 
     @PostMapping
     public ResponseEntity<ApiResponse<R>> create(@Valid @RequestBody U createRequest) {
-        T entity = mapToEntity(createRequest);
+        T entity = mapToEntity(createRequest);	
         T savedEntity = baseService.save(entity);
         return ResponseEntity.ok(new ApiResponse<>(Status.SUCCESS, null, "Saved successfully", mapToResponse(savedEntity)));
     }
