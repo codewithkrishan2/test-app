@@ -17,11 +17,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity implements UserDetails {
@@ -41,7 +45,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),
     			inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "roleId"))
     private Set<Role> roles = new HashSet<>();
-
+    
     @Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.roles
@@ -52,7 +56,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		
 		return email;
 	}
 
@@ -75,6 +78,5 @@ public class UserEntity extends BaseEntity implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-    
 
 }

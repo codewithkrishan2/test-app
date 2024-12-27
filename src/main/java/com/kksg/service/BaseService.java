@@ -29,11 +29,15 @@ public abstract class BaseService<T extends BaseEntity, ID> {
     }
 
     public List<T> findAll() {
-        return specificationExecutor.findAll(prepareFilter());
+//        return specificationExecutor.findAll(prepareFilter());
+    	List<T> entities = specificationExecutor.findAll(prepareFilter());
+		return postProcessAfterGetData(entities);
     }
 
     public Optional<T> findById(ID id) {
-        return specificationExecutor.findOne(prepareFilter().and(byId(id)));
+//        return specificationExecutor.findOne(prepareFilter().and(byId(id)));
+    	Optional<T> entity = specificationExecutor.findOne(prepareFilter().and(byId(id)));
+        return entity.map(this::postProcessAfterGetById);  // Post-process individual entity
     }
 
     public void delete(T entity) {
@@ -55,5 +59,16 @@ public abstract class BaseService<T extends BaseEntity, ID> {
 
     private Specification<T> byId(ID id) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), id);
+    }
+    
+ // Abstract post-processing method after fetching data
+    protected List<T> postProcessAfterGetData(List<T> result) {
+        return result;
+    }
+
+    // Abstract post-processing method after fetching a single entity by ID
+    protected T postProcessAfterGetById(T result) {
+        // Default implementation (could be overridden by subclasses)
+        return result;
     }
 }

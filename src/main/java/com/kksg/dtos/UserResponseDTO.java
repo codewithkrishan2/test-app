@@ -17,6 +17,7 @@ public class UserResponseDTO extends BaseResponseDTO {
     private String email;
 	private String password;
 	private Set<RolesDto> roles = new HashSet<>();
+//	private String additionalInf;
 	
 	@JsonProperty
 	public void setPassword(String password) {

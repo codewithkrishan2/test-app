@@ -1,6 +1,7 @@
 package com.kksg.service.impl;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -66,4 +67,21 @@ public class UserServiceImpl extends BaseService<UserEntity, Long> implements IU
 		}
 	    return findByEmailAndIsDeletedFalse;
 	}
+	
+//	@Override
+//    protected List<UserEntity> postProcessAfterGetData(List<UserEntity> users) {
+//        // Example: Enrich user data with additional info
+//        for (UserEntity user : users) {
+//            // Add related data or manipulate fields as needed
+//            user.setAdditionalInf("Enriched Info");
+//        }
+//        return users;
+//    }
+//
+//    @Override
+//    protected UserEntity postProcessAfterGetById(UserEntity user) {
+//        // Example: Remove sensitive fields or enrich user data
+//        user.setAdditionalInf("Enriched Info");
+//        return user;
+//    }
 }

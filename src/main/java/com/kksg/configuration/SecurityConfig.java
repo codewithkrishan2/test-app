@@ -35,7 +35,7 @@ public class SecurityConfig {
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 	
-	private static final String[] PUBLIC_URLS = {"/auth/**", "/v3/api-docs", "/v2/api-docs",
+	private static final String[] PUBLIC_URLS = {"/api/v1/auth/**", "/v3/api-docs", "/v2/api-docs",
             "/swagger-resources/**", "/swagger-ui/**", "/webjars/**"
     };
 
