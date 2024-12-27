@@ -61,8 +61,18 @@ public abstract class BaseController<T extends BaseEntity, R, U> {
                 .orElse(ResponseEntity.status(404).body(new ApiResponse<>(Status.FAILED, notFoundMessage, null,null)));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteFlagData/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+        return baseService.findById(id)
+                .map(entity -> {
+                    baseService.updateDeleteFlag(entity);
+                    return ResponseEntity.ok(new ApiResponse<Void>(Status.SUCCESS, null, "Deleted successfully",null));
+                })
+                .orElse(ResponseEntity.status(404).body(new ApiResponse<Void>(Status.FAILED, notFoundMessage,null , null)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deletePermanent(@PathVariable Long id) {
         return baseService.findById(id)
                 .map(entity -> {
                     baseService.delete(entity);

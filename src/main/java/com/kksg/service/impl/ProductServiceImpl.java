@@ -25,7 +25,7 @@ public class ProductServiceImpl extends BaseService<Product, Long> implements Pr
 	}
 	
 	@Override
-	protected void preProcessBeforeSave(Product product) {
+	protected Product preProcessBeforeSave(Product product) {
 	    // Example: Check if product has at least one size
 	    if (product.getSizes() == null || product.getSizes().isEmpty()) {
 	        throw new IllegalArgumentException("A product must have at least one size.");
@@ -35,6 +35,8 @@ public class ProductServiceImpl extends BaseService<Product, Long> implements Pr
 	    if (product.getImages() == null || product.getImages().isEmpty()) {
 	        throw new IllegalArgumentException("A product must have at least one image.");
 	    }
+	    
+	    return super.preProcessBeforeSave(product);
 	}
 
 	

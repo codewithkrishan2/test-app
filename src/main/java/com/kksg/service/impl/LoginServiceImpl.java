@@ -79,7 +79,7 @@ public class LoginServiceImpl extends BaseService<UserEntity, Long> implements L
 	}
 
 	@Override
-	protected void preProcessBeforeSave(UserEntity entity) {
+	protected UserEntity preProcessBeforeSave(UserEntity entity) {
 		// Check for unique email
 		Optional<UserEntity> existingUser;
 		if (entity.getId() != null) {
@@ -91,6 +91,8 @@ public class LoginServiceImpl extends BaseService<UserEntity, Long> implements L
 		if (existingUser.isPresent()) {
 			throw new IllegalArgumentException("Email already exists");
 		}
+		
+		return super.preProcessBeforeSave(entity);
 	}
 
 }

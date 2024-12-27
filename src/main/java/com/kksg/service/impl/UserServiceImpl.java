@@ -37,7 +37,7 @@ public class UserServiceImpl extends BaseService<UserEntity, Long> implements IU
 	}
 
 	@Override
-	protected void preProcessBeforeSave(UserEntity entity) {
+	protected UserEntity preProcessBeforeSave(UserEntity entity) {
 		// Check for unique email
 		Optional<UserEntity> existingUser;
 		if (entity.getId() != null) {
@@ -54,6 +54,7 @@ public class UserServiceImpl extends BaseService<UserEntity, Long> implements IU
 		Role role = this.roleRepo.findById(AppConstants.NORLMAL_USER).orElseThrow(()-> new IllegalArgumentException("Role not found"));
 		entity.getRoles().add(role);
 		logger.info("Roles added:{}", entity.getRoles());
+		return super.preProcessBeforeSave(entity);
 	}
 
 	@Override
