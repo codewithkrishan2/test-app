@@ -4,11 +4,6 @@ import java.util.List;
 
 import com.kksg.enums.ProductStatus;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,49 +14,39 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequestDTO {
-	   	@NotBlank(message = "Product name cannot be empty")
-	    @Size(min = 3, max = 100, message = "Product name should be between 3 and 100 characters")
-	    private String name;
+	private String name;
+    private String description;
+    private String details;
+    private Double mrp;  // Maximum Retail Price
+    private Double sellingPrice;
+    private Integer quantity;
+    private String brand;
+    private Boolean isActive = true;  // Active or not
+    private ProductStatus status;  // Enum representing product status (e.g., ACTIVE, INACTIVE)
+    private String fabricType;  // Fabric type (e.g., Cotton, Lace)
+    private Long categoryId;  // Foreign key reference to Category
+    private String mainImageUrl;
+    
+    private List<String> imageUrls;  // List of image URLs for the product images
+    private List<ProductOptionRequestDTO> options;  // List of product options (like sizes, colors, etc.)
+    private List<ProductVariantRequestDTO> variants;  // List of product variants (e.g., 32A, 34B, etc.)
 
-	    @NotBlank(message = "Product description cannot be empty")
-	    @Size(min = 10, max = 500, message = "Product description should be between 10 and 500 characters")
-	    private String description;
+    // Inner DTO for ProductOption
+    @Getter
+    @Setter
+    public static class ProductOptionRequestDTO {
+        private String optionName;  // e.g., Size, Color
+        private List<String> optionValues;  // e.g., [32A, 34B, Red, Black]
+    }
 
-	    private String details;
-
-	    @NotNull(message = "MRP cannot be null")
-	    @DecimalMin(value = "0.01", message = "MRP should be greater than 0")
-	    private Double mrp;
-
-	    @NotNull(message = "Selling price cannot be null")
-	    @DecimalMin(value = "0.01", message = "Selling price should be greater than 0")
-	    private Double sellingPrice;
-
-		@NotNull(message = "Quantity cannot be null")
-	    @Min(value = 0, message = "Quantity cannot be negative")
-	    private Integer quantity;
-
-	    private String brand;
-
-	    private Boolean isActive = true;
-
-	    @NotNull(message = "Product status cannot be null")
-	    private ProductStatus status;
-
-	    private String color;
-
-	    @NotBlank(message = "Fabric type cannot be empty")
-	    private String fabricType;
-
-	    @NotBlank(message = "Padding type cannot be empty")
-	    private String paddingType;
-
-	    @NotNull(message = "Category cannot be null")
-	    private Long categoryId;  // Assuming category is passed as an ID
-
-	    @NotNull(message = "Sizes cannot be null")
-	    private List<SizeRequestDTO> sizes;
-
-	    @NotNull(message = "Images cannot be null")
-	    private List<String> imageLinks;  // Assuming image links are passed as strings (URLs)
-	}
+    // Inner DTO for ProductVariant
+    @Getter
+    @Setter
+    public static class ProductVariantRequestDTO {
+        private String size;  // e.g., 32A, 34C
+        private String type;  // e.g., Sports, Full Coverage
+        private Integer quantity;  // Stock quantity for the variant
+        private Double sellingPrice;  // Selling price for the variant
+        private Boolean isActive = true;  // Whether this variant is active
+    }
+}

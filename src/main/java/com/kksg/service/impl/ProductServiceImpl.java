@@ -3,8 +3,10 @@ package com.kksg.service.impl;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.kksg.dtos.ProductRequestDTO;
+import com.kksg.entity.Category;
 import com.kksg.entity.Product;
+import com.kksg.repo.CategoryRepo;
+import com.kksg.repo.ProductOptionRepo;
 import com.kksg.repo.ProductRepo;
 import com.kksg.service.BaseService;
 import com.kksg.service.ProductService;
@@ -13,10 +15,14 @@ import com.kksg.service.ProductService;
 public class ProductServiceImpl extends BaseService<Product, Long> implements ProductService {
 
 	private ProductRepo productRepository;
+	private CategoryRepo categoryRepository;
+	private ProductOptionRepo optionRepository;
 	
-	public ProductServiceImpl(ProductRepo productRepository) {
+	public ProductServiceImpl(ProductRepo productRepository, CategoryRepo categoryRepository, ProductOptionRepo optionRepository) {
         super(productRepository, productRepository);
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.optionRepository = optionRepository;
     }
 
 	@Override
@@ -26,19 +32,45 @@ public class ProductServiceImpl extends BaseService<Product, Long> implements Pr
 	
 	@Override
 	protected Product preProcessBeforeSave(Product product) {
-	    // Example: Check if product has at least one size
-	    if (product.getSizes() == null || product.getSizes().isEmpty()) {
-	        throw new IllegalArgumentException("A product must have at least one size.");
+	    // Ensure Category is resolved
+		if (product.getCategory() != null && product.getCategory().getId() != null) {
+	        Category category = categoryRepository.findById(product.getCategory().getId())
+	            .orElseThrow(() -> new RuntimeException("Category not found with ID: " + product.getCategory().getId()));
+	        product.setCategory(category);
 	    }
 
-	    // Example: Check if product has at least one image
-	    if (product.getImages() == null || product.getImages().isEmpty()) {
-	        throw new IllegalArgumentException("A product must have at least one image.");
+	    // Process Product Images
+	    if (product.getImages() != null) {
+	        product.getImages().forEach(image -> image.setProduct(product));
 	    }
-	    
+
+	    // Process Product Options
+	    if (product.getOptions() != null) {
+	        product.getOptions().forEach(option -> {
+	            option.setProduct(product);
+	            if (option.getValues() != null) {
+	                option.getValues().forEach(value -> value.setOption(option));
+	            }
+	        });
+	    }
+
+	    // Process Product Variants
+	    if (product.getVariants() != null) {
+	        product.getVariants().forEach(variant -> {
+	            variant.setProduct(product);
+	            if (variant.getOptionValues() != null) {
+	                variant.getOptionValues().forEach(value -> {
+	                    if (value.getOption() != null) {
+	                        value.setOption(optionRepository.findByNameAndProductAndIsDeletedFalse(value.getOption().getName(), product)
+	                            .orElseThrow(() -> new RuntimeException("Option not found: " + value.getOption().getName())));
+	                    }
+	                });
+	            }
+	        });
+	    }
+
 	    return super.preProcessBeforeSave(product);
 	}
 
-	
 	
 }

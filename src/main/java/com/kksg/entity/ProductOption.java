@@ -3,8 +3,6 @@ package com.kksg.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,18 +20,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category")
-public class Category extends BaseEntity {
+@Table(name = "product_option")
+public class ProductOption extends BaseEntity {
 
-	private String name;
-	private String description;
-	
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
-    
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Category> subCategories = new ArrayList<>();
-	
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    private String name;  // Option name (e.g., "Size", "Color", "Cup Size")
+
+    @OneToMany(mappedBy = "option", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductOptionValue> values = new ArrayList<>();
 }

@@ -12,7 +12,7 @@ import com.kksg.service.impl.SizeServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1/size")
-public class SizeController extends BaseController<Size, SizeResponseDTO, SizeRequestDTO> {
+public class SizeController extends BaseController<Size, SizeResponseDTO, SizeResponseDTO, SizeRequestDTO> {
 
 	private final SizeService sizeService;
 	private ModelMapper modelMapper;
@@ -30,6 +30,11 @@ public class SizeController extends BaseController<Size, SizeResponseDTO, SizeRe
 
 	@Override
 	protected SizeResponseDTO mapToResponse(Size entity) {
+		return modelMapper.map(entity, SizeResponseDTO.class);
+	}
+
+	@Override
+	protected SizeResponseDTO mapToListResponse(Size entity) {
 		return modelMapper.map(entity, SizeResponseDTO.class);
 	}
 

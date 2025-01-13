@@ -20,8 +20,9 @@ public class ProductImage extends BaseEntity{
 
 
     private String imageUrl;   // The URL of the image
-    private String imageType;  // Type of image (e.g., "thumbnail", "main", etc.)
     private Integer imageOrder;
+    private Boolean isMain = false;  // Whether the image is the main image for the product;
+    
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)

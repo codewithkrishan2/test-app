@@ -2,6 +2,7 @@ package com.kksg.entity;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +42,21 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(nullable = false, length = 500)
     private String password;
+    
+    private String phone;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Address> addresses;
+//    
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Order> orders;
+//    
+    @ManyToMany
+    @JoinTable(
+      name = "user_wishlist", 
+      joinColumns = @JoinColumn(name = "user_id"), 
+      inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> wishlist;
     
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"),

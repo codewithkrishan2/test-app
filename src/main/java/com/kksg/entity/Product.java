@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,19 +40,20 @@ public class Product extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private ProductStatus status;
 
-    private String color;
-    private String fabricType;              // Fabric type (e.g., Cotton, Lace)
-    private String paddingType;             // Padding type
-    
+    private String fabricType;  // e.g., Cotton, Lace
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    private String mainImageUrl;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Size> sizes = new ArrayList<>();
-  
-    
+    private List<ProductOption> options = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductVariant> variants = new ArrayList<>();  
 }
