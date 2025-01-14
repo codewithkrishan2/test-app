@@ -18,9 +18,13 @@ import lombok.Setter;
 public class ProductImage extends BaseEntity{
 
     private String imageUrl;   // The URL of the image
-    private String imageType;  // Type of image (e.g., "thumbnail", "main", etc.)
     private Integer imageOrder;
+<<<<<<< HEAD
     private String altText;
+=======
+    private Boolean isMain = false;  // Whether the image is the main image for the product;
+    
+>>>>>>> b3f1912b7b60dcbfafed5d27982b3a223a0ced7a
     
 
     @ManyToOne

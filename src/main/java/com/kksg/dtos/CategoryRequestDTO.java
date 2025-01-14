@@ -1,7 +1,5 @@
 package com.kksg.dtos;
 
-import com.kksg.entity.Category;
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +17,6 @@ public class CategoryRequestDTO{
 	
 	private String description;
 	
-    private Category parentCategory;
+	private Long parentCategoryId;
     
 }

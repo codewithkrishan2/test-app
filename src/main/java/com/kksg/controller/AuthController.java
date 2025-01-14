@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-public class AuthController extends BaseController<UserEntity, AuthResponseDTO, AuthRequestDTO> {
+public class AuthController extends BaseController<UserEntity, AuthResponseDTO, AuthResponseDTO, AuthRequestDTO> {
 
 	private LoginService loginService;
 	private UserServiceImpl userServiceImpl;
@@ -35,12 +35,12 @@ public class AuthController extends BaseController<UserEntity, AuthResponseDTO, 
 
 	@PostMapping("/login")
 	public ResponseEntity<ApiResponse<AuthResponseDTO>> login(@Valid @RequestBody AuthRequestDTO request) {
-		try {
+//		try {
 			AuthResponseDTO response = loginService.doLogin(request);
 			return ResponseEntity.ok(new ApiResponse<>(Status.SUCCESS, null,"Login Successfully", response));
-		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body(new ApiResponse<>(Status.FAILED, e.getMessage(), null, null));
-		}
+//		} catch (Exception e) {
+//			return ResponseEntity.internalServerError().body(new ApiResponse<>(Status.FAILED, e.getMessage(), null, null));
+//		}
 	}
 
 	@PostMapping("/register")
@@ -59,8 +59,12 @@ public class AuthController extends BaseController<UserEntity, AuthResponseDTO, 
 
 	@Override
 	protected AuthResponseDTO mapToResponse(UserEntity entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return modelMapper.map(entity, AuthResponseDTO.class);
+	}
+
+	@Override
+	protected AuthResponseDTO mapToListResponse(UserEntity entity) {
+		return modelMapper.map(entity, AuthResponseDTO.class);
 	}
 
 }

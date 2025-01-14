@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserController extends BaseController<UserEntity, UserResponseDTO, UserRequestDTO> {
+public class UserController extends BaseController<UserEntity, UserResponseDTO, UserResponseDTO, UserRequestDTO> {
 
 	private final IUserService userService; // Add a field for UserServiceImpl
 	private ModelMapper modelMapper;
@@ -46,6 +46,11 @@ public class UserController extends BaseController<UserEntity, UserResponseDTO, 
 
 	@Override
 	protected UserResponseDTO mapToResponse(UserEntity entity) {
+		return modelMapper.map(entity, UserResponseDTO.class);
+	}
+
+	@Override
+	protected UserResponseDTO mapToListResponse(UserEntity entity) {
 		return modelMapper.map(entity, UserResponseDTO.class);
 	}
 

@@ -26,6 +26,7 @@ public abstract class BaseEntity {
 
     private LocalDateTime modified;
 
+    @Column(name = "is_deleted", columnDefinition = "boolean default false")
     private boolean isDeleted = false;
 
     @PrePersist

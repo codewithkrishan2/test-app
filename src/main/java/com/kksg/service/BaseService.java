@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kksg.entity.BaseEntity;
 
@@ -22,6 +23,7 @@ public abstract class BaseService<T extends BaseEntity, ID> {
 		this.specificationExecutor = specificationExecutor;
 	}
 
+	@Transactional
 	public T save(T entity) {
 		T model = preProcessBeforeSave(entity);
 		logger.debug("Saving entity");
@@ -35,7 +37,7 @@ public abstract class BaseService<T extends BaseEntity, ID> {
 
 	public Optional<T> findById(ID id) {
 		Optional<T> entity = specificationExecutor.findOne(prepareFilter().and(byId(id)));
-		return entity.map(this::postProcessAfterGetById); // Post-process individual entity
+		return entity.map(this::postProcessAfterGetDataById); // Post-process individual entity
 	}
 
 	public void updateDeleteFlag(T entity) {
@@ -77,7 +79,7 @@ public abstract class BaseService<T extends BaseEntity, ID> {
 	}
 
 	// Abstract post-processing method after fetching a single entity by ID
-	protected T postProcessAfterGetById(T result) {
+	protected T postProcessAfterGetDataById(T result) {
 		// Default implementation (could be overridden by subclasses)
 		return result;
 	}

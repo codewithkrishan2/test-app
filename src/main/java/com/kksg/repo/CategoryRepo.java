@@ -11,6 +11,8 @@ public interface CategoryRepo extends JpaRepository<Category, Long>, JpaSpecific
 
 	Optional<Category> findByIdAndIsDeletedFalse(Long id);
     
-    Optional<Category> findByNameAndIsDeletedFalseAndIdNot(String email, Long id);
+    Optional<Category> findByNameAndIsDeletedFalseAndIdNot(String name, Long id);
+    
+    Optional<Category> findByNameAndIsDeletedFalse(String name);
 	
 }
