@@ -32,5 +32,8 @@ public class Category extends BaseEntity {
     
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Category> subCategories = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
 	
 }

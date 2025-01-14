@@ -14,6 +14,6 @@ public class ProductImageResponseDTO extends BaseResponseDTO {
     private String imageUrl;   // URL of the image
     private String imageType;  // Type of image (e.g., "thumbnail", "main", etc.)
     private Integer imageOrder;     // Order of image
-    private Long productId;
+    private String altText;
 	
 }

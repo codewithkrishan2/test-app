@@ -1,14 +1,21 @@
 package com.kksg.controller;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kksg.contants.Status;
 import com.kksg.dtos.ProductRequestDTO;
 import com.kksg.dtos.ProductResponseDTO;
 import com.kksg.entity.Product;
 import com.kksg.service.ProductService;
 import com.kksg.service.impl.ProductServiceImpl;
+import com.kksg.util.ApiResponse;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/product")
@@ -34,4 +41,11 @@ public class ProductController extends BaseController<Product, ProductResponseDT
 	}
 
 
+	//add one product
+	@PostMapping("/add")
+	public ResponseEntity<ApiResponse<ProductResponseDTO>> create(@Valid @RequestBody ProductRequestDTO request) {
+		ProductResponseDTO saveProduct = productService.save(request);	
+		return ResponseEntity.ok(new ApiResponse<>(Status.SUCCESS, null, "Saved successfully", saveProduct));
+	}
+	
 }

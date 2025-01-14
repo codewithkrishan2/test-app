@@ -9,7 +9,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -25,33 +24,22 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "product")
-public class Product extends BaseEntity {
+public class Product  extends BaseEntity {
 	
+	private String sku;
 	private String name;
     private String description;
     private String details;
-    private Double mrp;
-    private Double sellingPrice;
-    private Integer quantity;
     private String brand;
-    private Boolean isActive = true;
     
     @Enumerated(value = EnumType.STRING)
-    private ProductStatus status;
-
-    private String color;
-    private String fabricType;              // Fabric type (e.g., Cotton, Lace)
-    private String paddingType;             // Padding type
+    private ProductStatus status; //	AVAILABLE, OUT_OF_STOCK, DISCONTINUED
     
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductImage> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Size> sizes = new ArrayList<>();
-  
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductVariant> variants = new ArrayList<>();
     
 }
