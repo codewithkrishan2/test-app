@@ -12,7 +12,7 @@ import com.kksg.service.impl.OptionServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1/option")	
-public class OptionController extends BaseController<Option, OptionResponseDTO, OptionRequestDTO> {
+public class OptionController extends BaseController<Option, OptionResponseDTO, OptionResponseDTO, OptionRequestDTO> {
 
 	private OptionService optionService;
 	private ModelMapper modelMapper;
@@ -29,6 +29,11 @@ public class OptionController extends BaseController<Option, OptionResponseDTO, 
 	@Override
 	protected OptionResponseDTO mapToResponse(Option entity) {
 		return modelMapper.map(entity, OptionResponseDTO.class);
+	}
+	@Override
+	protected OptionResponseDTO mapToListResponse(Option entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

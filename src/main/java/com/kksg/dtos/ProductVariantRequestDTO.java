@@ -1,6 +1,5 @@
 package com.kksg.dtos;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +22,11 @@ public class ProductVariantRequestDTO {
 
     @NotNull
     @Positive
-    private BigDecimal mrp;
+    private Double mrp;
 
     @NotNull
     @Positive
-    private BigDecimal sellingPrice;
+    private Double sellingPrice;
 
     @PositiveOrZero
     private int quantity;
