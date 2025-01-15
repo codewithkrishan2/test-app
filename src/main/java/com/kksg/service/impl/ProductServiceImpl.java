@@ -35,7 +35,8 @@ public class ProductServiceImpl extends BaseService<Product, Long> implements Pr
 	
 	
 	public ProductServiceImpl(ProductRepo productRepository, ModelMapper modelMapper, CategoryRepo categoryRepository, 
-			OptionValueRepo optionValueRepository, ProductImageRepo productImageRepository, ProductVarientRepo productVarientRepository) {
+			OptionValueRepo optionValueRepository, ProductImageRepo productImageRepository, ProductVarientRepo productVarientRepository,
+			ProductOptionRepo optionRepository) {
         super(productRepository, productRepository);
         this.productRepository = productRepository;
 		this.modelMapper = modelMapper;
@@ -43,6 +44,7 @@ public class ProductServiceImpl extends BaseService<Product, Long> implements Pr
 		this.optionValueRepository = optionValueRepository;
 		this.productImageRepository = productImageRepository;
 		this.productVarientRepository = productVarientRepository;
+		this.optionRepository = optionRepository;
     }
 
 	@Override

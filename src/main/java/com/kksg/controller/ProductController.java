@@ -15,7 +15,6 @@ import com.kksg.dtos.ProductResponseDTO;
 import com.kksg.entity.Category;
 import com.kksg.entity.Product;
 import com.kksg.entity.ProductOption;
-import com.kksg.entity.ProductVariant;
 import com.kksg.service.ProductService;
 import com.kksg.service.impl.ProductServiceImpl;
 import com.kksg.util.ApiResponse;
