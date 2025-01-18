@@ -66,8 +66,8 @@ public class ProductController extends BaseController<Product, ProductResponseDT
 	    if (dto.getOptions() != null) {
 	        List<ProductOption> options = dto.getOptions().stream().map(optionDTO -> {
 	            ProductOption option = new ProductOption();
-//	            option.setOptionName(optionDTO.getOptionName());
-//	            option.setOptionValues(optionDTO.getOptionValues());
+	            option.setName(optionDTO.getName());
+//	            option.setValues(optionDTO.getOptionValues());
 	            return option;
 	        }).toList();
 	        product.setOptions(options);
