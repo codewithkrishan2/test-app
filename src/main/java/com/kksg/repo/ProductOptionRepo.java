@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import com.kksg.entity.Category;
 import com.kksg.entity.Product;
 import com.kksg.entity.ProductOption;
 

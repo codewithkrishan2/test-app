@@ -14,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,18 +34,13 @@ public class Product  extends BaseEntity {
     private String brand;
     
     @Enumerated(value = EnumType.STRING)
-    private ProductStatus status;
-
-    private String fabricType;  // e.g., Cotton, Lace
+    private ProductStatus status; //	AVAILABLE, OUT_OF_STOCK, DISCONTINUED
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     private String mainImageUrl;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductImage> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductOption> options = new ArrayList<>();

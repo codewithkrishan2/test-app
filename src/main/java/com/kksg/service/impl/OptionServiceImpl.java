@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.kksg.entity.Option;
-import com.kksg.entity.UserEntity;
 import com.kksg.exception.ApiException;
 import com.kksg.repo.OptionRepo;
 import com.kksg.service.BaseService;

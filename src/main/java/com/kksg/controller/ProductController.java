@@ -14,9 +14,7 @@ import com.kksg.dtos.ProductRequestDTO;
 import com.kksg.dtos.ProductResponseDTO;
 import com.kksg.entity.Category;
 import com.kksg.entity.Product;
-import com.kksg.entity.ProductImage;
 import com.kksg.entity.ProductOption;
-import com.kksg.entity.ProductVariant;
 import com.kksg.service.ProductService;
 import com.kksg.service.impl.ProductServiceImpl;
 import com.kksg.util.ApiResponse;
@@ -36,10 +34,6 @@ public class ProductController extends BaseController<Product, ProductResponseDT
 		this.modelMapper = modelMapper;
 	}
 
-//	@Override
-//	protected Product mapToEntity(ProductRequestDTO dto) {
-//		return modelMapper.map(dto, Product.class);
-//	}
 	
 	@Override
 	protected Product mapToEntity(ProductRequestDTO dto) {
@@ -52,40 +46,14 @@ public class ProductController extends BaseController<Product, ProductResponseDT
 	        product.setCategory(category);
 	    }
 
-	    // Map Images
-	    if (dto.getImageUrls() != null) {
-	        List<ProductImage> images = dto.getImageUrls().stream().map(url -> {
-	            ProductImage image = new ProductImage();
-	            image.setImageUrl(url);
-	            return image;
-	        }).toList();
-	        product.setImages(images);
-	    }
-
-	    // Map Options
 	    if (dto.getOptions() != null) {
 	        List<ProductOption> options = dto.getOptions().stream().map(optionDTO -> {
 	            ProductOption option = new ProductOption();
-	            option.setName(optionDTO.getName());
-//	            option.setValues(optionDTO.getOptionValues());
 	            return option;
 	        }).toList();
 	        product.setOptions(options);
 	    }
 
-	    // Map Variants
-	    if (dto.getVariants() != null) {
-	        List<ProductVariant> variants = dto.getVariants().stream().map(variantDTO -> {
-	            ProductVariant variant = new ProductVariant();
-//	            variant.setSize(variantDTO.getSize());
-//	            variant.setType(variantDTO.getType());
-//	            variant.setQuantity(variantDTO.getQuantity());
-	            variant.setSellingPrice(variantDTO.getSellingPrice());
-//	            variant.setIsActive(variantDTO.getIsActive());
-	            return variant;
-	        }).toList();
-	        product.setVariants(variants);
-	    }
 
 	    return product;
 	}

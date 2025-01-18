@@ -21,11 +21,13 @@ public class Address extends BaseEntity {
 	@ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+	private String addressType;
     
+	private String name;
     private String street;
     private String city;
     private String state;
-    private String zipCode;
     private String country;
+    private String pincode;
     private boolean isDefault;
 }

@@ -19,10 +19,9 @@ public class ProductImage extends BaseEntity{
 
     private String imageUrl;   // The URL of the image
     private Integer imageOrder;
-    private Boolean isMain = false;  // Whether the image is the main image for the product;
+    private String altText;
+    private String imageType; //main, thumnail etc
     
-    
-
     @ManyToOne
     @JoinColumn(name = "variant_id") // Link to ProductVariant if image is variant-specific
     private ProductVariant variant;
