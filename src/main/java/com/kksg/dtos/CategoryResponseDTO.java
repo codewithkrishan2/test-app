@@ -3,9 +3,6 @@ package com.kksg.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.kksg.entity.Category;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,6 @@ public class CategoryResponseDTO extends BaseResponseDTO {
 	private String name;
 	private String description;
 	
-	@JsonManagedReference
-    private Category parentCategory;
-    private List<Category> subCategories = new ArrayList<>();
+    private CategoryResponseDTO parentCategory;
+    private List<CategoryResponseDTO> subCategories = new ArrayList<>();
 }

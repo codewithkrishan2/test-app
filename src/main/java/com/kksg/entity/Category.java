@@ -27,16 +27,16 @@ public class Category extends BaseEntity {
 
 	private String name;
 	private String description;
-	
+
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
-    
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Category> subCategories = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
-	
+	@JoinColumn(name = "parent_category_id")
+	private Category parentCategory;
+
+	@OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Category> subCategories = new ArrayList<>();
+
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Product> products = new ArrayList<>();
+
 }

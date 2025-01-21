@@ -26,7 +26,7 @@ public abstract class BaseService<T extends BaseEntity, ID> {
 	@Transactional
 	public T save(T entity) {
 		T model = preProcessBeforeSave(entity);
-		logger.debug("Saving entity");
+		logger.debug("Saving entity {}", model);
 		return createPostProcess(repository.save(model));
 	}
 

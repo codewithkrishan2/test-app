@@ -1,7 +1,7 @@
 package com.kksg.controller;
 
 import java.util.Collections;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,32 +36,71 @@ public class CategoryController extends BaseController<Category, CategoryRespons
 
 	@Override
 	protected CategoryResponseDTO mapToResponse(Category entity) {
-		return modelMapper.map(entity, CategoryResponseDTO.class);
+	    CategoryResponseDTO catDto = new CategoryResponseDTO();
+	    catDto.setId(entity.getId());
+	    catDto.setCreated(entity.getCreated() != null ? entity.getCreated().toString() : null);
+	    catDto.setModified(entity.getModified() != null ? entity.getModified().toString() : null);
+	    catDto.setName(entity.getName());
+	    catDto.setDescription(entity.getDescription());
+
+	    // Map parentCategory with only essential fields
+	    if (entity.getParentCategory() != null) {
+	        CategoryResponseDTO parentDto = new CategoryResponseDTO();
+	        parentDto.setId(entity.getParentCategory().getId());
+	        parentDto.setName(entity.getParentCategory().getName());
+	        parentDto.setDescription(entity.getParentCategory().getDescription());
+	        catDto.setParentCategory(parentDto);
+	    } else {
+	        catDto.setParentCategory(null);
+	    }
+
+	    // Map subCategories recursively without circular parent references
+	    if (entity.getSubCategories() != null && !entity.getSubCategories().isEmpty()) {
+	        List<CategoryResponseDTO> subCategoryDtos = entity.getSubCategories().stream().map(subCategory -> {
+	            CategoryResponseDTO subDto = mapToResponse(subCategory); // Recursive call
+	            subDto.setParentCategory(null); // Prevent circular reference
+	            return subDto;
+	        }).toList();
+	        catDto.setSubCategories(subCategoryDtos);
+	    } else {
+	        catDto.setSubCategories(Collections.emptyList());
+	    }
+
+	    return catDto;
 	}
+
+
+
 
 	@Override
 	protected CategoryListResponseDTO mapToListResponse(Category entity) {
-		CategoryListResponseDTO map = modelMapper.map(entity, CategoryListResponseDTO.class);
-//		map.setParentCategoryId(entity.getParentCategory().getId());
-		// Safely check if the parentCategory is null before accessing getId()
+	    CategoryListResponseDTO map = modelMapper.map(entity, CategoryListResponseDTO.class);
+
+	    // Safely check if the parentCategory is null before accessing getId()
 	    if (entity.getParentCategory() != null) {
 	        map.setParentCategoryId(entity.getParentCategory().getId());
 	    } else {
 	        map.setParentCategoryId(null); // or any default value if required
 	    }
-	    
-	    // Map the subCategories explicitly using Stream API
+
+	    // Map subCategories with minimal details (IDs and names)
 	    if (entity.getSubCategories() != null && !entity.getSubCategories().isEmpty()) {
 	        map.setSubCategories(
 	            entity.getSubCategories().stream()
-	                .map(subCategory -> modelMapper.map(subCategory, CategoryListResponseDTO.class))
-	                .collect(Collectors.toList())
+	                .map(subCategory -> {
+	                    CategoryListResponseDTO subCategoryDto = new CategoryListResponseDTO();
+	                    subCategoryDto.setId(subCategory.getId());
+	                    subCategoryDto.setName(subCategory.getName());
+	                    return subCategoryDto; // Minimal fields for list response
+	                })
+	                .toList()
 	        );
 	    } else {
-	        map.setSubCategories(Collections.emptyList()); // Return an empty list if there are no subCategories
+	        map.setSubCategories(Collections.emptyList()); // Return an empty list if no sub categories
 	    }
-	    
-		return map;
+
+	    return map;
 	}
+
 
 }

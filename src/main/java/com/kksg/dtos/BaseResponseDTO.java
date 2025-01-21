@@ -10,8 +10,8 @@ import lombok.Setter;
 public abstract class BaseResponseDTO {
 
 	private Long id;
-    private LocalDateTime created;
-    private LocalDateTime modified;
+    private String created;
+    private String modified;
     private boolean isDeleted = false;
 	
 }
